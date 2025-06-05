@@ -3,7 +3,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
         <div class="field">
-            <label for="email">mail</label>
+            <label for="email">Mail</label>
             <input type="email" name="email" id="email" formControlName="email" placeholder="tumail@mail.com">
         
 
@@ -19,7 +19,7 @@
         </div>
 
         <div class="field">
-            <label for="password">contraseña</label>
+            <label for="password">Contraseña</label>
             <input type="password" name="password" id="password" formControlName="password" placeholder="********">
             
             @if (loginForm.controls.password.invalid && 
@@ -30,6 +30,8 @@
                 }
             }
         </div>
+
+        <div class="mensaje" *ngIf="mensaje"> {{ mensaje}} </div>
 
         <input type="submit" value="Iniciar sesion">
 

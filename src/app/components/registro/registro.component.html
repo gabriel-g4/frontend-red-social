@@ -1,1 +1,147 @@
-<p>registro works!</p>
+<div class="container">
+    <h2> Registrarse </h2>
+    <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+
+        <!-- fecha de nacimiento, descripción breve -->
+
+        <div class="field">
+            <label for="name">Nombre</label>
+            <input type="text" name="name" id="name" formControlName="name" placeholder="Nombre">
+
+            @if (registroForm.controls.name.invalid && 
+            registroForm.controls.name.touched) {
+                @if(registroForm.controls.name.errors?.['required']) {
+                    <small> El nombre es requerido. </small>
+                }
+            }
+        </div>
+
+        <div class="field">
+            <label for="surname">Apellido</label>
+            <input type="text" name="surname" id="surname" formControlName="surname" placeholder="Apellido">
+
+            @if (registroForm.controls.surname.invalid && 
+            registroForm.controls.surname.touched) {
+                @if(registroForm.controls.surname.errors?.['required']) {
+                    <small> El apellido es requerido. </small>
+                }
+            }
+        </div>
+
+        <div class="field">
+            <label for="email">Mail</label>
+            <input type="email" name="email" id="email" formControlName="email" placeholder="tumail@mail.com">
+        
+
+            @if (registroForm.controls.email.invalid && 
+            registroForm.controls.email.touched) {
+                @if(registroForm.controls.email.errors?.['required']) {
+                    <small> El mail es requerido. </small>
+                } @else if (registroForm.controls.email.errors?.['email']) {
+                    <small> Debe ingresar un mail válido. </small>
+                }
+            }
+
+        </div>
+
+        <div class="field">
+            <label for="username">Nombre de Usuario</label>
+            <input type="text" name="username" id="username" formControlName="username" placeholder="Nombre de Usuario">
+
+            @if (registroForm.controls.username.invalid && 
+            registroForm.controls.username.touched) {
+                @if(registroForm.controls.username.errors?.['required']) {
+                    <small> El nombre de Usuario es requerido. </small>
+                }
+            }
+        </div>
+
+        <div class="field">
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" formControlName="password" placeholder="********">
+            
+            @if (registroForm.controls.password.invalid && 
+            (registroForm.controls.password.touched || 
+            registroForm.controls.password.dirty)) {
+                @if(registroForm.controls.password.errors?.['required']) {
+                    <small> La contraseña es requerida. </small>
+                } @else if (registroForm.controls.password.errors?.['minlength']) {
+                    <small> Su contraseña debe tener un mínimo de 6 caracteres. </small>
+                }
+            }
+        </div>
+
+        <div class="field">
+            <label for="repeatPassword">Repetir contraseña</label>
+            <input type="password" name="repeatPassword" id="repeatPassword" formControlName="repeatPassword" placeholder="*********">
+            
+            @if (registroForm.controls.repeatPassword.invalid && 
+            (registroForm.controls.repeatPassword.touched ||
+            registroForm.controls.repeatPassword.dirty)) {
+                @if(registroForm.controls.repeatPassword.errors?.['required']) {
+                    <small> Repetir la contraseña es requerido. </small>
+                } @else if (registroForm.controls.repeatPassword.errors?.['minlength']) {
+                    <small> Su contraseña debe tener un mínimo de 6 caracteres. </small>
+                } @else if (registroForm.controls.repeatPassword.errors?.['passworderror']) {
+                    <small> Las contraseñas no coinciden. </small>
+            }
+        }
+        </div>
+
+
+        <div class="field">
+            <label for="date">Fecha de nacimiento</label>
+            <input type="date" name="date" id="date" formControlName="date" placeholder="Fecha de nacimiento">
+
+            @if (registroForm.controls.date.invalid && 
+            registroForm.controls.date.touched) {
+                @if(registroForm.controls.date.errors?.['required']) {
+                    <small> La fecha de nacimiento es requerida. </small>
+                }
+            }
+        </div>
+
+
+        <div class="field">
+            <label for="description">Descripción personal</label>
+            <input type="text" name="description" id="description" formControlName="description" placeholder="Descripción breve">
+        </div>
+
+
+        <div class="field">
+            <label for="profile-picture">Foto de perfil</label>
+            <input type="file" name="profile-picture" id="profile-picture" formControlName="profilePicture" placeholder="Foto de perfil" accept="image/*">
+
+            @if (registroForm.controls.profilePicture.invalid && 
+                registroForm.controls.profilePicture.touched) {
+                @if(registroForm.controls.profilePicture.errors?.['required']) {
+                    <small> La foto de perfil es requerida. </small>
+                }
+            }
+        </div>
+
+        <div class="field">
+            <label for="user-type">Tipo de usuario</label>
+            <select name="user-type" id="user-type" formControlName="userType">
+                @for (item of userTypeOptions; track $index) {
+                    <option value="{{ item }}"> {{ item }}</option>
+                }
+            </select>
+
+             @if (registroForm.controls.userType.invalid && 
+                registroForm.controls.userType.touched) {
+                @if(registroForm.controls.userType.errors?.['required']) {
+                    <small> El tipo de usuario es requerido. </small>
+                }
+            }
+            
+        </div>
+
+
+        <div class="mensaje" *ngIf="mensaje"> {{ mensaje}} </div>
+
+        <input type="submit" value="Registrarse">
+
+        <a routerLink="/login" routerLinkActive="active">¿Ya tenés cuenta?</a>
+    </form>
+</div>
