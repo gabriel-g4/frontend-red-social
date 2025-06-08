@@ -32,6 +32,7 @@ export class LoginComponent {
       }
     } else {
       this.mensaje = "Formulario incorrecto."
+      this.loginForm.markAllAsTouched()
     }
   }
 }

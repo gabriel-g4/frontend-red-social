@@ -58,6 +58,7 @@ export class RegistroComponent implements OnInit{
       }
     } else {
       this.mensaje = "Formulario incorrecto."
+      this.registroForm.markAllAsTouched()
     }
 
   }
