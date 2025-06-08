@@ -27,6 +27,10 @@
             loginForm.controls.password.dirty)) {
                 @if(loginForm.controls.password.errors?.['required']) {
                     <small> La contraseña es requerida. </small>
+                } @else if (loginForm.controls.password.errors?.['minlength']) {
+                    <small> Su contraseña debe tener un mínimo de 8 caracteres. </small>
+                } @else if (loginForm.controls.password.errors?.['pattern']) {
+                    <small> Su contraseña debe poseer al menos una mayúscula, una minúscula y un número.</small>
                 }
             }
         </div>
@@ -35,6 +39,8 @@
 
         <input type="submit" value="Iniciar sesion">
 
-        <a routerLink="/registro" routerLinkActive="active">Crear una cuenta</a>
+        <div class="link">
+            <a routerLink="/registro" routerLinkActive="active">Crear una cuenta</a>
+        </div>
     </form>
 </div>

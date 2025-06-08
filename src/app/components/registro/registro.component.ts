@@ -30,8 +30,8 @@ export class RegistroComponent implements OnInit{
     surname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6), ]),
-    repeatPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$')]),
+    repeatPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$')]),
     date: new FormControl('', [Validators.required]),
     description: new FormControl(''),
     profilePicture: new FormControl('', [Validators.required]),
@@ -56,6 +56,9 @@ export class RegistroComponent implements OnInit{
         this.mensaje = "Ocurrió un error desconocido";
       }
       }
+    } else {
+      this.mensaje = "Formulario incorrecto."
     }
+
   }
 }

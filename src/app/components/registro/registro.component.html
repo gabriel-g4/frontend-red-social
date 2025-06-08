@@ -66,7 +66,9 @@
                 @if(registroForm.controls.password.errors?.['required']) {
                     <small> La contraseña es requerida. </small>
                 } @else if (registroForm.controls.password.errors?.['minlength']) {
-                    <small> Su contraseña debe tener un mínimo de 6 caracteres. </small>
+                    <small> Su contraseña debe tener un mínimo de 8 caracteres. </small>
+                } @else if (registroForm.controls.password.errors?.['pattern']) {
+                    <small> Su contraseña debe poseer al menos una mayúscula, una minúscula y un número.</small>
                 }
             }
         </div>
@@ -81,10 +83,12 @@
                 @if(registroForm.controls.repeatPassword.errors?.['required']) {
                     <small> Repetir la contraseña es requerido. </small>
                 } @else if (registroForm.controls.repeatPassword.errors?.['minlength']) {
-                    <small> Su contraseña debe tener un mínimo de 6 caracteres. </small>
+                    <small> Su contraseña debe tener un mínimo de 8 caracteres. </small>
                 } @else if (registroForm.controls.repeatPassword.errors?.['passworderror']) {
                     <small> Las contraseñas no coinciden. </small>
-            }
+                } @else if (registroForm.controls.repeatPassword.errors?.['pattern']) {
+                    <small> Su contraseña debe poseer al menos una mayúscula, una minúscula y un número.</small>
+                }
         }
         </div>
 
@@ -142,6 +146,8 @@
 
         <input type="submit" value="Registrarse">
 
-        <a routerLink="/login" routerLinkActive="active">¿Ya tenés cuenta?</a>
+        <div class="link">
+            <a routerLink="/login" routerLinkActive="active">¿Ya tenés cuenta?</a>
+        </div>
     </form>
 </div>
