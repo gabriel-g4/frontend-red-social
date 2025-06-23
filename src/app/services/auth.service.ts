@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { Observable } from 'rxjs';
+import { RegisterModel } from '../models/register.interface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,12 @@ export class AuthService {
         login: email,
         password
     })
+  }
+
+  register (registerModel: RegisterModel) : Observable<any> {
+    return this.httpClient.post(`${this.baseUrl}/auth/register`, 
+      registerModel
+    )
   }
   
 }

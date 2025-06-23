@@ -18,7 +18,7 @@ export class LoginComponent {
   constructor(private router: Router, private authService: AuthService) {}
 
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    login: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(8) , Validators.pattern('(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$')])
   })
 
@@ -27,7 +27,7 @@ export class LoginComponent {
     if (this.loginForm.valid){
       try {
         console.log("valido")
-        this.authService.login(this.loginForm.value.email || "err", this.loginForm.value.password || "err" )
+        this.authService.login(this.loginForm.value.login || "err", this.loginForm.value.password || "err" )
         .subscribe({
            next: (res) => {
             console.log('Respuesta:', res);
