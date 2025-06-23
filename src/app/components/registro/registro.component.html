@@ -124,22 +124,7 @@
             }
         </div>
 
-        <div class="field">
-            <label for="user-type">Tipo de usuario</label>
-            <select name="user-type" id="user-type" formControlName="userType">
-                @for (item of userTypeOptions; track $index) {
-                    <option value="{{ item }}"> {{ item }}</option>
-                }
-            </select>
-
-             @if (registroForm.controls.userType.invalid && 
-                registroForm.controls.userType.touched) {
-                @if(registroForm.controls.userType.errors?.['required']) {
-                    <small> El tipo de usuario es requerido. </small>
-                }
-            }
-            
-        </div>
+        
 
 
         <div class="mensaje" *ngIf="mensaje"> {{ mensaje}} </div>

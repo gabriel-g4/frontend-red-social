@@ -35,7 +35,6 @@ export class RegistroComponent implements OnInit{
     date: new FormControl('', [Validators.required]),
     description: new FormControl(''),
     profilePicture: new FormControl('', [Validators.required]),
-    userType: new FormControl('', [Validators.required])
   })
 
   async ngOnInit() {
@@ -52,9 +51,9 @@ export class RegistroComponent implements OnInit{
       } catch (error){
         if (error instanceof Error) {
         this.mensaje = error.message;
-      } else {
-        this.mensaje = "Ocurrió un error desconocido";
-      }
+        } else {
+          this.mensaje = "Ocurrió un error desconocido";
+        }
       }
     } else {
       this.mensaje = "Formulario incorrecto."

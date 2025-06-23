@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent {
   mensaje: string = "";
   errors: ValidationErrors | null = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -26,9 +27,31 @@ export class LoginComponent {
     if (this.loginForm.valid){
       try {
         console.log("valido")
-        this.mensaje = ""
-      } catch (error) {
+        this.authService.login(this.loginForm.value.email || "err", this.loginForm.value.password || "err" )
+        .subscribe({
+           next: (res) => {
+            console.log('Respuesta:', res);
+            if (res?.status === 404) {
+              console.error('Error de login:', res.message);
+              this.mensaje = res.message
+            } else {
+              console.log('Login correcto:', res);
+              this.router.navigate(["/publicaciones"])
+            }
+          },
+          error: (err) => {
+            console.error('Error de red o backend:', err);
+            this.mensaje = err.message
+          }
+        });
         
+      } catch (error) {
+        if (error instanceof Error) {
+            this.mensaje = error.message;
+        } else {
+            this.mensaje = 'Ocurrió un error desconocido';
+            console.error(error)
+        }
       }
     } else {
       this.mensaje = "Formulario incorrecto."
