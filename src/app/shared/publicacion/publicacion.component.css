@@ -1,0 +1,37 @@
+.post-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px auto;
+  max-width: 600px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 200px; 
+}
+
+.post-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 12px 0;
+  object-fit: cover;
+  max-height: 400px;
+}
+
+.post-card p {
+  margin: 6px 0;
+  color: #333;
+  font-size: 15px;
+}
+
+
+.post-card .autor {
+  margin-top: auto;  
+  align-self: flex-end; 
+  font-size: 14px;
+  color: #666;
+}

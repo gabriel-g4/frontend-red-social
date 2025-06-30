@@ -35,13 +35,21 @@ export class LoginComponent {
               console.error('Error de login:', res.message);
               this.mensaje = res.message
             } else {
-              console.log('Login correcto:', res);
-              this.router.navigate(["/publicaciones"])
+              if (res?.accessToken) {
+                // Guardar token JWT en localStorage
+                localStorage.setItem('token', res.accessToken);
+                console.log('Login correcto. Token guardado.');
+
+                // Redireccionar al componente protegido
+                this.router.navigate(['/publicaciones']);
+              } else {
+                this.mensaje = res.message || "Login fallido";
+              }
             }
           },
           error: (err) => {
             console.error('Error de red o backend:', err);
-            this.mensaje = err.message
+            this.mensaje = err.error?.message
           }
         });
         

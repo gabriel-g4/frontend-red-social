@@ -218,3 +218,49 @@ footer {
   }
 }
 
+button {
+  background-color: #07485E;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: inline-block;
+}
+
+button:hover:not(:disabled) {
+  background-color: #03232E;
+}
+
+button:disabled {
+  background-color: #B4D2D7;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  button {
+    width: 100%;
+    padding: 0.75rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  button {
+    background-color: #B4D2D7;
+    color: #03232E;
+  }
+
+  button:hover:not(:disabled) {
+    background-color: #E1EBF0;
+  }
+
+  button:disabled {
+    background-color: #666666;
+    color: #ccc;
+  }
+}

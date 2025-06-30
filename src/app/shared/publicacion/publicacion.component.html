@@ -1,0 +1,8 @@
+<div class="post-card">
+  <h5>{{ post.titulo }}</h5>
+  <p>{{ post.descripcion }}</p>
+  <img [src]="URL + post.imagenUrl" alt="Imagen del post">
+  <p class="autor">{{ post.autor.username }}</p>
+  <button [routerLink]="['/posts', post._id]">Ver detalles</button>
+  <button (click)="onLike()">👍 Dar Like</button>
+</div>

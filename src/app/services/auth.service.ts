@@ -21,10 +21,35 @@ export class AuthService {
     })
   }
 
-  register (registerModel: RegisterModel) : Observable<any> {
-    return this.httpClient.post(`${this.baseUrl}/auth/register`, 
-      registerModel
-    )
+  register(registerModel: RegisterModel): Observable<any> {
+    const formData = new FormData();
+
+    formData.append('username', registerModel.username);
+    formData.append('email', registerModel.email);
+    formData.append('nombre', registerModel.nombre);
+    formData.append('apellido', registerModel.apellido);
+    formData.append('password', registerModel.password);
+    formData.append('fechaNacimiento', registerModel.fechaNacimiento);
+
+    if (registerModel.descripcion) {
+      formData.append('descripcion', registerModel.descripcion);
+    }
+
+    // El enum debe enviarse como string
+    formData.append('tipoPerfil', registerModel.tipoPerfil); // como "usuario" o "administrador"
+
+    // Imagen (File)
+    if (registerModel.imagenPerfil instanceof File) {
+      formData.append('imagenPerfil', registerModel.imagenPerfil);
+    }
+
+    return this.httpClient.post(`${this.baseUrl}/auth/register`, formData);
+  }
+
+
+  // hacer una sesion cuando use jwt y un getUsuarioActual()
+  getUser() : string {
+    return ""
   }
   
 }

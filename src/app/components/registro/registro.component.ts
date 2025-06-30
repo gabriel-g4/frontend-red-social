@@ -36,7 +36,7 @@ export class RegistroComponent implements OnInit{
     repeatPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$')]),
     date: new FormControl('', [Validators.required]),
     description: new FormControl(''),
-    profilePicture: new FormControl('', [Validators.required]),
+    profilePicture: new FormControl<File | null>(null),
   })
 
   async ngOnInit() {
@@ -61,9 +61,11 @@ export class RegistroComponent implements OnInit{
           password: this.registroForm.value.password || "",
           fechaNacimiento: (this.registroForm.value.date || ""),
           tipoPerfil: TipoUsuario.USER,
-          imagenPerfil: this.registroForm.value.profilePicture || "",
+          imagenPerfil: this.registroForm.value.profilePicture || undefined,
           descripcion: this.registroForm.value.description || ""
         } 
+
+        console.log(registerObject)
 
         this.authService.register(registerObject)
         .subscribe({
@@ -73,8 +75,16 @@ export class RegistroComponent implements OnInit{
               console.error('Error de registro:', res.message);
               this.mensaje = res.message
             } else {
-              console.log('Registro correcto:', res);
-              this.router.navigate(["/publicaciones"])
+              if (res?.accessToken) {
+                // Guardar token JWT en localStorage
+                localStorage.setItem('token', res.accessToken);
+                console.log('Registro correcto. Token guardado.');
+
+                // Redireccionar al componente protegido
+                this.router.navigate(['/publicaciones']);
+              } else {
+                this.mensaje = res.message || "Login fallido";
+              }
             }
           },
           error: (err) => {

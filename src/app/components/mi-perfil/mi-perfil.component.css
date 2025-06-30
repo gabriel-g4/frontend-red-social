@@ -1,0 +1,32 @@
+.foto-perfil {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.publicacion {
+  border: 1px solid #ccc;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.imagen-post {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+.comentarios {
+  margin-top: 12px;
+  padding-left: 12px;
+  border-left: 3px solid #aaa;
+}
+
+section {
+    width: 75dvw;
+    margin: 0 auto;
+}

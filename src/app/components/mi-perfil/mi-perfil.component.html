@@ -1,1 +1,20 @@
-<p>mi-perfil works!</p>
+<section>
+    <div *ngIf="user" class="perfil-container">
+      <h2>Mi Perfil</h2>
+      <img [src]="user.imagenPerfil" alt="Foto de perfil" class="foto-perfil" />
+      
+      <p><strong>Nombre:</strong> {{ user.nombre }} {{ user.apellido }}</p>
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Descripción:</strong> {{ user.descripcion }}</p>
+    
+      <h3>Últimas 3 publicaciones</h3>
+      @for (post of publicaciones; track $index) {
+        <app-publicacion [post]="post"></app-publicacion>
+        }
+    </div>
+    
+    <div *ngIf="!user">
+      <p>Cargando datos del usuario...</p>
+    </div>
+</section>

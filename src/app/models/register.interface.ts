@@ -10,7 +10,7 @@ export interface RegisterModel {
     apellido: string,
     password: string,
     fechaNacimiento: string,
-    imagenPerfil?: string,
+    imagenPerfil?: File,
     descripcion?: string,
     tipoPerfil: TipoUsuario
 }

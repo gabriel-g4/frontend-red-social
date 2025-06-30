@@ -1,0 +1,75 @@
+<section class="container">
+    
+    @if(post){
+        <div class="post-card">
+            <div class="post-header">
+                <img
+                class="avatar"
+                [src]="URL + post.autor?.imagenPerfil || URL + '/uploads/default-avatar.png'"
+                alt="Avatar del autor"
+                />
+                <div class="post-info">
+                <p class="nombre-usuario">{{ post.autor?.nombre }} {{ post.autor?.apellido }}</p>
+                <p class="username">&#64;{{ post.autor?.username }}</p>
+                <p class="fecha">{{ post.createdAt | date: 'short' }}</p>
+                </div>
+            </div>
+
+            <h2 class="post-titulo">{{ post.titulo }}</h2>
+
+            <p class="post-descripcion">{{ post.descripcion }}</p>
+
+            <div *ngIf="post.imagenUrl" class="post-imagen">
+                <img [src]="URL + post.imagenUrl" alt="Imagen del post" />
+            </div>
+
+            <button class="like-button" (click)="onLike()">👍 Dar Like</button>
+            </div>
+
+    }
+     
+    
+    <div class="comentarios">
+      <h3>Comentarios</h3>
+    
+        @for (comentario of comentarios; track $index) {
+            <div class="comentario">
+                <div class="comentario-header">
+                    <img
+                    class="avatar"
+                    [src]="URL + comentario.autor?.imagenPerfil ||  URL + '/uploads/default-avatar.png'"
+                    alt="Avatar del usuario"
+                    />
+                        <div class="comentario-info">
+                            <p class="nombre-usuario">{{ comentario.autor?.nombre }} {{ comentario.autor?.apellido }}</p>
+                            <p class="username">&#64;{{ comentario.autor?.username }}</p>
+                            <p class="fecha">{{ comentario.createdAt | date: 'short' }}</p>
+                        </div>
+                </div>
+                <div class="comentario-imagen" *ngIf="comentario.imagenUrl">
+                    <img [src]="URL + comentario.imagenUrl" alt="Imagen del comentario" />
+                </div>
+                <div class="comentario-texto">
+                    {{ comentario.texto }}
+                </div>
+    
+            </div>
+        }
+      
+      <button
+      class="cargar-button"
+        *ngIf="hasMore && !loading" 
+        (click)="cargarComentarios()">
+        Cargar más
+      </button>
+      
+      <div class="cargar-texto">
+
+          <p *ngIf="loading">Cargando comentarios...</p>
+          <p *ngIf="!hasMore && comentarios.length > 0">No hay más comentarios.</p>
+          <p *ngIf="!loading && comentarios.length === 0">No hay comentarios todavía.</p>
+        
+      </div>
+      
+    </div>
+</section>

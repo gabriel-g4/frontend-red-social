@@ -19,6 +19,10 @@ export const routes: Routes = [
         loadComponent: ()=> import('./components/registro/registro.component').then(c => c.RegistroComponent), 
     },
     { 
+        path: 'posts/:id', 
+        loadComponent: ()=> import('./components/detalle-publicacion/detalle-publicacion.component').then(c => c.DetallePublicacionComponent) 
+    },
+    { 
         path: "**", 
         redirectTo: "/publicaciones", 
         pathMatch: "full"
