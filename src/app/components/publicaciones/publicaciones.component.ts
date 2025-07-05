@@ -3,6 +3,7 @@ import { Post } from '../../models/posts.interface';
 import { PostsService } from '../../services/posts.service';
 import { GetPostsDto } from '../../models/get-posts-dto.interface';
 import { PublicacionComponent } from '../../shared/publicacion/publicacion.component';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -17,11 +18,21 @@ export class PublicacionesComponent implements OnInit {
   limit = 10;
   total = 0;
   sortBy: 'date' | 'likes' = 'date';
+  userId: string = "";
 
-  constructor(private postsService: PostsService) {}
+  constructor(private postsService: PostsService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.loadPosts();
+    this.authService.autorizar().subscribe({
+      next: (res) => {
+        this.userId = res.data.id;
+        this.loadPosts();
+      },
+      error: (err) => {
+        console.error('No autorizado:', err);
+        this.loadPosts();
+      }
+    });
   }
 
   changeSort(sort: "likes" | "date") {
@@ -49,6 +60,7 @@ export class PublicacionesComponent implements OnInit {
   this.postsService.getPosts(dto).subscribe({
     next: (res) => {
       console.log('RESPUESTA:', res);
+      console.log('RESPUESTA:', res.posts.map(p => ({ id: p.createdAt, likes: p.likes })));
       this.posts = [...this.posts, ...res.posts];
       this.offset += this.limit;
       this.total = res.total

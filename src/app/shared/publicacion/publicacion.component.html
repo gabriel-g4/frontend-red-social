@@ -1,8 +1,57 @@
 <div class="post-card">
-  <h5>{{ post.titulo }}</h5>
-  <p>{{ post.descripcion }}</p>
-  <img [src]="URL + post.imagenUrl" alt="Imagen del post">
-  <p class="autor">{{ post.autor.username }}</p>
-  <button [routerLink]="['/posts', post._id]">Ver detalles</button>
-  <button (click)="onLike()">👍 Dar Like</button>
+  <div class="post-header">
+    <img
+    class="avatar"
+    [src]="URL + post.autor.imagenPerfil || URL + '/uploads/default-avatar.png'"
+    alt="Avatar del autor"
+    />
+    <div class="post-info">
+        <span class="nombre-usuario">{{ post.autor.nombre }} {{ post.autor.apellido }}</span>
+        <span class="username">&#64;{{ post.autor.username }}</span>
+        <span class="fecha">{{ post.createdAt | date: 'short' }}</span>
+    </div>
+</div>
+  <h5 class="post-titulo">{{ post.titulo }}</h5>
+  <p class="post-descripcion">{{ post.descripcion }}</p>
+  
+  
+  <img [src]="URL + post.imagenUrl" alt="Imagen del post" class="post-imagen"/>
+  
+
+  <div class="button-group">
+    <button [routerLink]="['/posts', post._id]">Ver detalles</button>
+    @if (!post.likes.includes(userId)) {
+      <button (click)="onLike()">👍 Dar Like ({{ likes }})</button>
+    } @else {
+      <button (click)="onUnlike()">👍 Quitar Like ({{ likes }})</button>
+    }
+  </div>
+  <div class="comentarios">
+  
+    @for (comentario of comentarios; track $index) {
+    <div class="comentario">
+      <div class="comentario-header">
+        <div class="comentario-info">
+          <p class="nombre-usuario">{{ comentario.autor?.nombre }} {{ comentario.autor?.apellido }}</p>
+          <p class="username">&#64;{{ comentario.autor?.username }}</p>
+        </div>
+          <p class="fecha">{{ comentario.createdAt | date: 'short' }}</p>
+        
+      </div>
+      
+      <div class="comentario-texto">
+        {{ comentario.texto }}
+      </div>
+
+      @if(comentario.imagenUrl) {
+          <span class="modificado"> <i> imagen </i> </span>
+         } 
+
+      @if(comentario.modificado) {
+      <span class="modificado"> editado </span>
+      }
+  
+    </div>
+    }
+  </div>
 </div>

@@ -13,25 +13,90 @@
   min-height: 200px; 
 }
 
-.post-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 12px 0;
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
   object-fit: cover;
-  max-height: 400px;
-}
-
-.post-card p {
-  margin: 6px 0;
-  color: #333;
-  font-size: 15px;
+  margin-right: 12px;
 }
 
 
-.post-card .autor {
-  margin-top: auto;  
-  align-self: flex-end; 
-  font-size: 14px;
+.nombre-usuario {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.username {
+  font-size: 0.85rem;
   color: #666;
+}
+
+.fecha {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  margin-bottom: 1rem;
+}
+
+.post-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-imagen {
+  margin: 15px 0;
+}
+
+.post-titulo {
+  font-size: 1.15rem;
+}
+
+.comentarios {
+  margin-top: 0.5rem;
+}
+
+.comentario {
+  /* background-color: #E1EBF0; */
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.comentario-header {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  
+  /* margin-bottom: 8px; */
+}
+
+.comentario-info {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  justify-content: space-between;
+}
+
+.comentario-texto {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #333;
+}
+
+.modificado {
+  text-align: right;
+  font-style: italic;
+  color: brown;
 }

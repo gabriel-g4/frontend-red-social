@@ -5,7 +5,7 @@
         <option value="likes" [selected]="sortBy === 'likes'">Likes</option>
     </select>
     @for (post of posts; track $index) {
-        <app-publicacion [post]="post"></app-publicacion>
+        <app-publicacion [post]="post" [userId]="userId"></app-publicacion>
     }
     @if (posts.length < total) {
         <button (click)="loadPosts()">

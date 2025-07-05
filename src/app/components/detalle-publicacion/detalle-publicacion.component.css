@@ -101,7 +101,7 @@ button {
 }
 
 .like-button {
-  background-color: #1976d2;
+  background-color: #07485E;
   color: #fff;
   border: none;
   padding: 8px 16px;
@@ -116,4 +116,22 @@ button {
   display: block;
   margin: 0 auto;
   margin-top: 2rem;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  margin-bottom: 1rem;
+}
+
+.post-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.modificado {
+  text-align: right;
+  font-style: italic;
+  color: brown;
 }

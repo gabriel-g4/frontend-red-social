@@ -5,28 +5,41 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment.development';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { CommentsService } from '../../services/comments.service';
 
 
 @Component({
   selector: 'app-publicacion',
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './publicacion.component.html',
   styleUrl: './publicacion.component.css'
 })
 export class PublicacionComponent implements OnInit {
 
-  constructor(private postsService: PostsService, private authService: AuthService) {}
+  constructor(private postsService: PostsService, private commentsService: CommentsService) {}
 
   @Input() post!: Post;
+  @Input() userId!: string
   URL = environment.URL;
-  postId = "this.post._id"
-  userId = "this.authService.getUser()"
+  
+  likes = 0
+  comentarios: any[] = []
+  postId = ""
+
   
   ngOnInit(): void {
     if (this.post) {
-      this.postId = this.post._id,
-      this.userId = ""
+      this.likes = this.post.likes.length
+      this.postId = this.post._id;
+      this.cargarComentarios();
     }
+  }
+
+  cargarComentarios() {
+    this.commentsService.getComentariosByPostId(this.postId, 1, 3).subscribe(res => {
+      this.comentarios.push(...res.comments);
+    })
   }
   
   onLike() {

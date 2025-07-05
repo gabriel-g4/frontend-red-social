@@ -9,9 +9,9 @@
                 alt="Avatar del autor"
                 />
                 <div class="post-info">
-                <p class="nombre-usuario">{{ post.autor?.nombre }} {{ post.autor?.apellido }}</p>
-                <p class="username">&#64;{{ post.autor?.username }}</p>
-                <p class="fecha">{{ post.createdAt | date: 'short' }}</p>
+                    <span class="nombre-usuario">{{ post.autor?.nombre }} {{ post.autor?.apellido }}</span>
+                    <span class="username">&#64;{{ post.autor?.username }}</span>
+                    <span class="fecha">{{ post.createdAt | date: 'short' }}</span>
                 </div>
             </div>
 
@@ -23,7 +23,11 @@
                 <img [src]="URL + post.imagenUrl" alt="Imagen del post" />
             </div>
 
-            <button class="like-button" (click)="onLike()">👍 Dar Like</button>
+            @if (!post.likes.includes(userId)) {
+            <button (click)="onLike()">👍 Dar Like ({{ likes }})</button>
+            } @else {
+            <button (click)="onUnlike()">👍 Quitar Like ({{ likes }})</button>
+            }
             </div>
 
     }
@@ -52,6 +56,9 @@
                 <div class="comentario-texto">
                     {{ comentario.texto }}
                 </div>
+                @if(comentario.modificado) {
+                    <p class="modificado"> Editado </p>
+                }
     
             </div>
         }

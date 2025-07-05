@@ -5,6 +5,7 @@ import { CommentsService } from '../../services/comments.service';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment.development';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-detalle-publicacion',
@@ -20,6 +21,7 @@ export class DetallePublicacionComponent implements OnInit {
   userId = ""
   post: any;
   comentarios: any[] = [];
+  likes = 0
 
   page: number = 1;
   limit: number = 5;
@@ -29,19 +31,33 @@ export class DetallePublicacionComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private postService: PostsService,
-    private commentsService: CommentsService
+    private commentsService: CommentsService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.postId = this.route.snapshot.paramMap.get('id')!;
-    this.cargarPublicacion();
-    this.cargarComentarios();
-    console.log(this.comentarios)
+
+    this.authService.autorizar().subscribe({
+      next: (res) => {
+        this.userId = res.data.id;
+        this.cargarPublicacion();
+        this.cargarComentarios();
+        console.log(this.comentarios)
+      },
+      error: (err) => {
+        console.error('No autorizado:', err);
+        // redirigir al login, mostrar error, etc.
+      }
+    })
+    
+    
   }
 
   cargarPublicacion() {
     this.postService.getPostById(this.postId).subscribe(data => {
       this.post = data;
+      this.likes = this.post.likes.length;
     });
   }
 

@@ -32,13 +32,13 @@ export class PostsService {
   }
 
   addLike(postId: string, userId: string): Observable<any> {
-    const url = `${this.baseUrl}/${postId}/like`;
+    const url = `${this.baseUrl}/posts/${postId}/like`;
     const headers = new HttpHeaders().set('userId', userId);
     return this.httpClient.post(url, {}, { headers });
   }
 
   removeLike(postId: string, userId: string): Observable<any> {
-    const url = `${this.baseUrl}/${postId}/like`;
+    const url = `${this.baseUrl}/posts/${postId}/like`;
     const headers = new HttpHeaders().set('userId', userId);
     return this.httpClient.delete(url, { headers });
   }

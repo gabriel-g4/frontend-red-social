@@ -46,6 +46,16 @@ export class AuthService {
     return this.httpClient.post(`${this.baseUrl}/auth/register`, formData);
   }
 
+  autorizar(): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No se encontró el token en localStorage');
+    }
+    return this.httpClient.post(`${this.baseUrl}/auth/autorizar`, { token });
+  }
+
+  
+
 
   // hacer una sesion cuando use jwt y un getUsuarioActual()
   getUser() : string {

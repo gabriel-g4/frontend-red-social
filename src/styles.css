@@ -218,6 +218,13 @@ footer {
   }
 }
 
+.post-card .button-group {
+  display: flex;
+  gap: 12px; /* espacio horizontal entre botones */
+  flex-wrap: wrap;
+}
+
+/* Botones */
 button {
   background-color: #07485E;
   color: white;
@@ -227,8 +234,22 @@ button {
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s ease;
-  display: inline-block;
+  flex: 1; /* que ocupen espacio igual en fila */
+  min-width: 120px; /* ancho mínimo */
+  text-align: center;
 }
+
+/* button {
+  background-color: #07485E;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: inline-block;
+} */
 
 button:hover:not(:disabled) {
   background-color: #03232E;
