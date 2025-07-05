@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { RegisterModel } from '../models/register.interface';
+import { User } from '../models/user.interface';
 
 
 @Injectable({
@@ -11,6 +12,18 @@ import { RegisterModel } from '../models/register.interface';
 export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
+
+  // auth.service.ts
+  private usuarioActual!: User;
+
+  setUsuarioActual(user: User) {
+    this.usuarioActual = user;
+  }
+
+  getUsuarioActual(): User {
+    return this.usuarioActual;
+  }
+
 
   baseUrl: string = environment.URL;
 
@@ -54,12 +67,9 @@ export class AuthService {
     return this.httpClient.post(`${this.baseUrl}/auth/autorizar`, { token });
   }
 
-  
-
-
-  // hacer una sesion cuando use jwt y un getUsuarioActual()
-  getUser() : string {
-    return ""
+  logout() {
+    localStorage.clear()
   }
+
   
 }
