@@ -1,17 +1,23 @@
 import { Routes } from '@angular/router';
+import { jwtAuthGuard } from './guards/jwt-auth.guard';
 
 export const routes: Routes = [
-    
+    { 
+        path: '',
+        loadComponent: ()=> import('./components/cargando/cargando.component').then(c => c.CargandoComponent) 
+    },
     {
-        path: "login", 
+        path: "login",
         loadComponent: ()=> import('./components/login/login.component').then(c => c.LoginComponent), 
     },
     {
-        path: "mi-perfil", 
+        path: "mi-perfil",
+        canActivate: [jwtAuthGuard],
         loadComponent: ()=> import('./components/mi-perfil/mi-perfil.component').then(c => c.MiPerfilComponent), 
     },
     {
         path: "publicaciones", 
+        canActivate: [jwtAuthGuard],
         loadComponent: ()=> import('./components/publicaciones/publicaciones.component').then(c => c.PublicacionesComponent), 
     },
     {
@@ -20,6 +26,7 @@ export const routes: Routes = [
     },
     { 
         path: 'posts/:id', 
+        canActivate: [jwtAuthGuard],
         loadComponent: ()=> import('./components/detalle-publicacion/detalle-publicacion.component').then(c => c.DetallePublicacionComponent) 
     },
     { 
