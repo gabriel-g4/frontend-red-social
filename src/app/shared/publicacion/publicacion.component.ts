@@ -23,14 +23,12 @@ export class PublicacionComponent implements OnInit {
   @Input() userId!: string
   URL = environment.URL;
   
-  likes = 0
   comentarios: any[] = []
   postId = ""
 
   
   ngOnInit(): void {
     if (this.post) {
-      this.likes = this.post.likes.length
       this.postId = this.post._id;
       this.cargarComentarios();
     }
@@ -44,14 +42,23 @@ export class PublicacionComponent implements OnInit {
   
   onLike() {
     this.postsService.addLike(this.postId, this.userId).subscribe({
-      next: (res) => console.log('Like agregado:', res),
+      next: (res) => {
+        console.log('Like agregado:', res)
+         this.post.likes.push(this.userId); // <-- Actualiza el array local
+      },
       error: (err: HttpErrorResponse) => console.error('Error al dar like:', err)
     });
   }
 
   onUnlike() {
     this.postsService.removeLike(this.postId, this.userId).subscribe({
-      next: (res) => console.log('Like quitado:', res),
+      next: (res) => {
+        console.log('Like quitado:', res);
+        const index = this.post.likes.indexOf(this.userId);
+        if (index > -1) {
+          this.post.likes.splice(index, 1); // <-- Actualiza el array local
+        }
+      },
       error: (err: HttpErrorResponse) => console.error('Error al quitar like:', err)
     });
   }

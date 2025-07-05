@@ -11,17 +11,31 @@ import { User } from '../models/user.interface';
 })
 export class AuthService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.usuarioActual = JSON.parse(storedUser);
+    }
+   }
 
   // auth.service.ts
   private usuarioActual!: User;
 
   setUsuarioActual(user: User) {
     this.usuarioActual = user;
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
-  getUsuarioActual(): User {
-    return this.usuarioActual;
+  getUsuarioActual(): User | null {
+    if (this.usuarioActual) return this.usuarioActual;
+
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.usuarioActual = JSON.parse(storedUser);
+      return this.usuarioActual;
+    }
+
+    return null;
   }
 
 

@@ -1,20 +1,30 @@
 <section>
-    <div *ngIf="user" class="perfil-container">
-      <h2>Mi Perfil</h2>
-      <img [src]="user.imagenPerfil" alt="Foto de perfil" class="foto-perfil" />
+  @if (user) {
+    <div class="perfil-container">
+      <img [src]="URL + user.imagenPerfil" alt="Foto de perfil" class="foto-perfil" />
+      <h2>&#64;{{ user.username }} </h2> 
       
-      <p><strong>Nombre:</strong> {{ user.nombre }} {{ user.apellido }}</p>
-      <p><strong>Username:</strong> {{ user.username }}</p>
-      <p><strong>Email:</strong> {{ user.email }}</p>
-      <p><strong>Descripción:</strong> {{ user.descripcion }}</p>
-    
-      <h3>Últimas 3 publicaciones</h3>
-      @for (post of publicaciones; track $index) {
-        <app-publicacion [post]="post"></app-publicacion>
-        }
+      
+      <p><strong>{{ user.nombre }} {{ user.apellido }}</strong> </p>
+      <span class="fecha"> <i>usuario desde el {{ user.createdAt | date: 'shortDate' }} </i> </span>
+      <p class="descripcion">{{ user.descripcion }}</p>
+
+      <div>
+        
+      </div>
+      
+      @if (publicaciones.length > 0) {
+        <h3>Últimas publicaciones</h3>
+        @for (post of publicaciones; track $index) {
+          <app-publicacion [post]="post" [userId]="userId"></app-publicacion>
+          }
+      } @else {
+        <h4> El usuario no tiene publicaciones.</h4>
+      } 
     </div>
-    
-    <div *ngIf="!user">
+  } @else {
+    <div>
       <p>Cargando datos del usuario...</p>
     </div>
+  }
 </section>

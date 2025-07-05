@@ -24,9 +24,9 @@
             </div>
 
             @if (!post.likes.includes(userId)) {
-            <button (click)="onLike()">👍 Dar Like ({{ likes }})</button>
+            <button (click)="onLike()">👍 Dar Like ({{ this.post.likes.length }})</button>
             } @else {
-            <button (click)="onUnlike()">👍 Quitar Like ({{ likes }})</button>
+            <button (click)="onUnlike()">👍 Quitar Like ({{ this.post.likes.length }})</button>
             }
             </div>
 

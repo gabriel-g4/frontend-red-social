@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validato
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { TimerService } from '../../services/timer.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent {
   mensaje: string = "";
   errors: ValidationErrors | null = [];
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private sessionTimerService: TimerService) {}
 
   loginForm = new FormGroup({
     login: new FormControl('', [Validators.required]),
@@ -39,6 +40,8 @@ export class LoginComponent {
                 // Guardar token JWT en localStorage
                 localStorage.setItem('token', res.accessToken);
                 console.log('Login correcto. Token guardado.');
+                this.authService.setUsuarioActual(res.user);
+                this.sessionTimerService.startTimers();
 
                 // Redireccionar al componente protegido
                 this.router.navigate(['/publicaciones']);

@@ -25,6 +25,7 @@ export class PublicacionesComponent implements OnInit {
   ngOnInit(): void {
     this.authService.autorizar().subscribe({
       next: (res) => {
+        console.log(res)
         this.userId = res.data.id;
         this.loadPosts();
       },

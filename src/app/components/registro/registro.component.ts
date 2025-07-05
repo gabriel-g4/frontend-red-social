@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { RegisterModel, TipoUsuario } from '../../models/register.interface';
+import { TimerService } from '../../services/timer.service';
 
 export const ValidatorRepeatedPassword = (password: FormControl): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -25,7 +26,7 @@ export class RegistroComponent implements OnInit{
   mensaje: string = "";
   userTypeOptions = ['usuario', 'administrador']
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private sessionTimerService: TimerService) {}
 
   registroForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -79,7 +80,8 @@ export class RegistroComponent implements OnInit{
                 // Guardar token JWT en localStorage
                 localStorage.setItem('token', res.accessToken);
                 console.log('Registro correcto. Token guardado.');
-
+                this.authService.setUsuarioActual(res.user);
+                this.sessionTimerService.startTimers();
                 // Redireccionar al componente protegido
                 this.router.navigate(['/publicaciones']);
               } else {

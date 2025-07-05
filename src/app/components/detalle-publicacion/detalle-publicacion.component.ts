@@ -21,7 +21,6 @@ export class DetallePublicacionComponent implements OnInit {
   userId = ""
   post: any;
   comentarios: any[] = [];
-  likes = 0
 
   page: number = 1;
   limit: number = 5;
@@ -57,7 +56,6 @@ export class DetallePublicacionComponent implements OnInit {
   cargarPublicacion() {
     this.postService.getPostById(this.postId).subscribe(data => {
       this.post = data;
-      this.likes = this.post.likes.length;
     });
   }
 
@@ -77,14 +75,23 @@ export class DetallePublicacionComponent implements OnInit {
 
   onLike() {
     this.postService.addLike(this.postId, this.userId).subscribe({
-      next: (res) => console.log('Like agregado:', res),
+      next: (res) => {
+        console.log('Like agregado:', res)
+        this.post.likes.push(this.userId); 
+      },
       error: (err: HttpErrorResponse) => console.error('Error al dar like:', err)
     });
   }
 
   onUnlike() {
     this.postService.removeLike(this.postId, this.userId).subscribe({
-      next: (res) => console.log('Like quitado:', res),
+      next: (res) => {
+        console.log('Like quitado:', res)
+        const index = this.post.likes.indexOf(this.userId);
+        if (index > -1) {
+          this.post.likes.splice(index, 1); // <-- Actualiza el array local
+        }
+      },
       error: (err: HttpErrorResponse) => console.error('Error al quitar like:', err)
     });
   }

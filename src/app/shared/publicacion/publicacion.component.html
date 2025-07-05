@@ -21,9 +21,9 @@
   <div class="button-group">
     <button [routerLink]="['/posts', post._id]">Ver detalles</button>
     @if (!post.likes.includes(userId)) {
-      <button (click)="onLike()">👍 Dar Like ({{ likes }})</button>
+      <button (click)="onLike()">👍 Dar Like ({{ this.post.likes.length }})</button>
     } @else {
-      <button (click)="onUnlike()">👍 Quitar Like ({{ likes }})</button>
+      <button (click)="onUnlike()">👍 Quitar Like ({{ this.post.likes.length }})</button>
     }
   </div>
   <div class="comentarios">
@@ -44,11 +44,11 @@
       </div>
 
       @if(comentario.imagenUrl) {
-          <span class="modificado"> <i> imagen </i> </span>
+          <small class="modificado"> <i> imagen </i> </small>
          } 
 
       @if(comentario.modificado) {
-      <span class="modificado"> editado </span>
+      <small class="modificado"> editado </small>
       }
   
     </div>
