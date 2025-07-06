@@ -286,5 +286,10 @@ button:disabled {
   }
 }
 
+.baja {
+  margin-top: 10px;
+  background-color: rgb(160, 0, 0);
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

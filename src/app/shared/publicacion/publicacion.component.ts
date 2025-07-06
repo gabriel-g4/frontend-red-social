@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Post } from '../../models/posts.interface';
 import { PostsService } from '../../services/posts.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -21,6 +21,8 @@ export class PublicacionComponent implements OnInit {
 
   @Input() post!: Post;
   @Input() userId!: string
+  @Input() isAdmin!: boolean;
+  @Output() eliminada = new EventEmitter<string>();
   URL = environment.URL;
   
   comentarios: any[] = []
@@ -60,6 +62,19 @@ export class PublicacionComponent implements OnInit {
         }
       },
       error: (err: HttpErrorResponse) => console.error('Error al quitar like:', err)
+    });
+  }
+
+ bajarPublicacion() {
+  this.postsService.softDeletePost(this.postId, this.userId).subscribe({
+    next: (response) => {
+    console.log('Publicación dada de baja:', response);
+    this.eliminada.emit(this.postId);
+    },
+    error: (err) => {
+      console.error('Error al dar de baja:', err);
+      alert('No se pudo dar de baja la publicación.');
+      }
     });
   }
 }

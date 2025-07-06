@@ -3,7 +3,11 @@
     <div class="perfil-container">
       <img [src]="URL + user.imagenPerfil" alt="Foto de perfil" class="foto-perfil" />
       <h2>&#64;{{ user.username }} </h2> 
-      
+      @if (user.tipoPerfil === 'administrador') {
+      <div class="admin-badge-container">
+        <span class="admin-badge">ADMIN</span>
+      </div>
+    }
       
       <p><strong>{{ user.nombre }} {{ user.apellido }}</strong> </p>
       <span class="fecha"> <i>usuario desde el {{ user.createdAt | date: 'shortDate' }} </i> </span>
@@ -16,7 +20,7 @@
       @if (publicaciones.length > 0) {
         <h3>Últimas publicaciones</h3>
         @for (post of publicaciones; track $index) {
-          <app-publicacion [post]="post" [userId]="userId"></app-publicacion>
+          <app-publicacion [post]="post" [userId]="userId"  [isAdmin]="isAdmin" (eliminada)="onPublicacionEliminada($event)"></app-publicacion>
           }
       } @else {
         <h4> El usuario no tiene publicaciones.</h4>

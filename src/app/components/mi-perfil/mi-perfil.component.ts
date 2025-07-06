@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User } from '../../models/user.interface';
+import { User, UsuarioEjemplo } from '../../models/user.interface';
 import { Post } from '../../models/posts.interface';
 import { PostsService } from '../../services/posts.service';
 import { CommonModule } from '@angular/common';
@@ -17,6 +17,7 @@ export class MiPerfilComponent {
   URL = environment.URL
   userId = ""
   user!: User;
+  isAdmin = false;
 
   publicaciones: Post[] = []; 
 
@@ -28,6 +29,8 @@ export class MiPerfilComponent {
     next: (res) => {
       
       this.userId = res.data.id;
+      this.user = this.authService.getUsuarioActual() || UsuarioEjemplo;
+      this.isAdmin = this.user?.tipoPerfil === 'administrador'
       this.loadUltimasPublicaciones();
     },
     error: (err) => {
@@ -36,6 +39,11 @@ export class MiPerfilComponent {
     }
   });
 }
+
+onPublicacionEliminada(postId: string) {
+  this.publicaciones = this.publicaciones.filter(pub => pub._id !== postId);
+}
+
   
 
   loadUltimasPublicaciones(): void {
@@ -47,21 +55,7 @@ export class MiPerfilComponent {
     }).subscribe({
       next: (res) =>{ 
         this.publicaciones = res.posts
-        this.user = this.authService.getUsuarioActual() || {
-              "_id": "6858beb2bc0a1b0ae7da77de",
-              "password" : "",
-              "username": "testuser",
-              "email": "test@gmail.com",
-              "nombre": "Usuario",
-              "apellido": "Prueba",
-              "imagenPerfil": "/uploads/imagen-1751218915664-604533924.jpg",
-              "tipoPerfil": "usuario",
-              "isActive": true,
-              "fechaNacimiento": "2010-01-01T00:00:00.000Z",
-              "descripcion": "Soy un usuario de prueba, si no se pudo cargar el usuario normal",
-              "createdAt": "2025-06-23T02:40:50.399Z",
-              "updatedAt": "2025-06-23T02:40:50.399Z",
-          };
+        
         console.log(this.user)
       },
       error: (err) => console.error('Error cargando publicaciones', err)

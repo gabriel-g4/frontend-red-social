@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService } from '../../services/posts.service';
 import { CommentsService } from '../../services/comments.service';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment.development';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
+import { UsuarioEjemplo } from '../../models/user.interface';
 
 @Component({
   selector: 'app-detalle-publicacion',
@@ -17,10 +18,12 @@ import { AuthService } from '../../services/auth.service';
 
 export class DetallePublicacionComponent implements OnInit {
   URL = environment.URL
+  isAdmin = false;
   postId!: string;
   userId = ""
   post: any;
   comentarios: any[] = [];
+  user: any;
 
   page: number = 1;
   limit: number = 5;
@@ -31,7 +34,8 @@ export class DetallePublicacionComponent implements OnInit {
     private route: ActivatedRoute,
     private postService: PostsService,
     private commentsService: CommentsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +44,8 @@ export class DetallePublicacionComponent implements OnInit {
     this.authService.autorizar().subscribe({
       next: (res) => {
         this.userId = res.data.id;
+        this.user = this.authService.getUsuarioActual() || UsuarioEjemplo;
+          this.isAdmin = this.user?.tipoPerfil === 'administrador'
         this.cargarPublicacion();
         this.cargarComentarios();
         console.log(this.comentarios)
@@ -93,6 +99,19 @@ export class DetallePublicacionComponent implements OnInit {
         }
       },
       error: (err: HttpErrorResponse) => console.error('Error al quitar like:', err)
+    });
+  }
+
+  bajarPublicacion() {
+  this.postService.softDeletePost(this.postId, this.userId).subscribe({
+    next: (response) => {
+    console.log('Publicación dada de baja:', response);
+    this.router.navigate(['/publicaciones'])
+    },
+    error: (err) => {
+      console.error('Error al dar de baja:', err);
+      alert('No se pudo dar de baja la publicación.');
+      }
     });
   }
 }

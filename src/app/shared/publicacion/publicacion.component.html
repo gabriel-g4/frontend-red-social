@@ -26,6 +26,11 @@
       <button (click)="onUnlike()">👍 Quitar Like ({{ this.post.likes.length }})</button>
     }
   </div>
+
+  @if (isAdmin) {
+    <button class="baja" (click)="bajarPublicacion()"> Dar de baja </button>
+  }
+
   <div class="comentarios">
   
     @for (comentario of comentarios; track $index) {

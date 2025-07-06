@@ -19,6 +19,12 @@ export class PostsService {
     return this.httpClient.get<Post>(url);
   }
 
+  softDeletePost(postId: string, userId: string): Observable<any> {
+    const url = `${this.baseUrl}/posts/${postId}`; 
+    const headers = new HttpHeaders().set('userId', userId);
+    return this.httpClient.delete(url, { headers });
+  }
+
   getPosts(getPostsDto: GetPostsDto): Observable<{ posts: Post[], total: number }> {
     let params = new HttpParams();
 

@@ -19,6 +19,8 @@ export class PublicacionesComponent implements OnInit {
   total = 0;
   sortBy: 'date' | 'likes' = 'date';
   userId: string = "";
+  isAdmin = false;
+  user : any;
 
   constructor(private postsService: PostsService, private authService: AuthService) {}
 
@@ -27,6 +29,8 @@ export class PublicacionesComponent implements OnInit {
       next: (res) => {
         console.log(res)
         this.userId = res.data.id;
+        this.user = this.authService.getUsuarioActual();
+        this.isAdmin = this.user?.tipoPerfil === 'administrador'
         this.loadPosts();
       },
       error: (err) => {
@@ -50,6 +54,12 @@ export class PublicacionesComponent implements OnInit {
       this.changeSort(value);
     }
   }
+
+  onPublicacionEliminada(postId: string) {
+  this.posts = this.posts.filter(pub => pub._id !== postId);
+  this.total--;
+}
+
 
   loadPosts(): void {
   const dto: GetPostsDto = {
