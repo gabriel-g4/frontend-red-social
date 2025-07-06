@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { jwtAuthGuard } from './guards/jwt-auth.guard';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
     { 
@@ -28,6 +29,11 @@ export const routes: Routes = [
         path: 'posts/:id', 
         canActivate: [jwtAuthGuard],
         loadComponent: ()=> import('./components/detalle-publicacion/detalle-publicacion.component').then(c => c.DetallePublicacionComponent) 
+    },
+    { 
+        path: 'dashboard/usuarios', 
+        canActivate: [adminGuard],
+        loadComponent: ()=> import('./components/dashboard-usuarios/dashboard-usuarios.component').then(c => c.DashboardUsuariosComponent) 
     },
     { 
         path: "**", 

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { WarningModalComponent } from '../shared/warning-modal/warning-modal.component';
+import { Injector } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,20 @@ import { WarningModalComponent } from '../shared/warning-modal/warning-modal.com
 export class TimerService {
   private warningTimer: any;
   private expirationTimer: any;
+  private authService!: AuthService;
 
   constructor(
     private dialog: MatDialog,
-    private authService: AuthService,
+    private injector: Injector,
     private router: Router
   ) {}
+
+  private getAuthService(): AuthService {
+    if (!this.authService) {
+      this.authService = this.injector.get(AuthService);
+    }
+    return this.authService;
+  }
 
   startTimers(): void {
     this.clearTimers();
@@ -26,7 +35,7 @@ export class TimerService {
 
       dialogRef.afterClosed().subscribe((result: boolean) => {
         if (result) {
-          this.authService.autorizar().subscribe({
+          this.getAuthService().autorizar().subscribe({
             next: () => this.startTimers(), // Reiniciar temporizadores
             error: () => this.router.navigate(['/login'])
           });
@@ -37,7 +46,7 @@ export class TimerService {
 
     // Después de 15 minutos, cerrar sesión si no se renovó
     this.expirationTimer = setTimeout(() => {
-      this.authService.logout();
+      this.getAuthService().logout();
       this.router.navigate(['/login']);
     }, 15 * 60 * 1000);
   }

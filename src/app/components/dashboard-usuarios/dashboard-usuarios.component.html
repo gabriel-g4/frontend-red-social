@@ -1,0 +1,144 @@
+
+    
+
+    <h1>Dashboard de Usuarios</h1>
+    
+
+
+<!-- Formulario de registro -->
+ <div class="container">
+    <h3> Crear usuario </h3>
+    <form [formGroup]="formRegistro" (ngSubmit)="registrarUsuario()">
+        <div class="field">
+
+            <input formControlName="username" placeholder="Username" name="username">
+            @if (formRegistro.controls['username'].invalid && 
+            formRegistro.controls['username'].touched) {
+                @if(formRegistro.controls['username'].errors?.['required']) {
+                    <small> El nombre de Usuario es requerido. </small>
+                }
+            }
+        </div>
+        <div class="field">
+            
+            <input formControlName="email" placeholder="Email" name="email">
+            @if (formRegistro.controls['email'].invalid && 
+            formRegistro.controls['email'].touched) {
+                @if(formRegistro.controls['email'].errors?.['required']) {
+                    <small> El mail es requerido. </small>
+                } @else if (formRegistro.controls['email'].errors?.['email']) {
+                    <small> Debe ingresar un mail válido. </small>
+                }
+            }
+        </div>
+        <div class="field">
+            
+            <input formControlName="password" type="password" placeholder="Contraseña">
+
+            @if (formRegistro.controls['password'].invalid && 
+            (formRegistro.controls['password'].touched || 
+            formRegistro.controls['password'].dirty)) {
+                @if(formRegistro.controls['password'].errors?.['required']) {
+                    <small> La contraseña es requerida. </small>
+                } @else if (formRegistro.controls['password'].errors?.['minlength']) {
+                    <small> Su contraseña debe tener un mínimo de 8 caracteres. </small>
+                } @else if (formRegistro.controls['password'].errors?.['pattern']) {
+                    <small> Su contraseña debe poseer al menos una mayúscula, una minúscula y un número.</small>
+                }
+            }
+        </div>
+        <div class="field">
+            
+            <input formControlName="nombre" placeholder="Nombre">
+            @if (formRegistro.controls['nombre'].invalid && 
+            formRegistro.controls['nombre'].touched) {
+                @if(formRegistro.controls['nombre'].errors?.['required']) {
+                    <small> El nombre es requerido. </small>
+                }
+            }
+        </div>
+        <div class="field">
+            
+            <input formControlName="apellido" placeholder="Apellido">
+             @if (formRegistro.controls['apellido'].invalid && 
+            formRegistro.controls['apellido'].touched) {
+                @if(formRegistro.controls['apellido'].errors?.['required']) {
+                    <small> El apellido es requerido. </small>
+                }
+            }
+        </div>
+        <div class="field">
+            <select formControlName="tipoPerfil">
+              <option value="usuario">Usuario</option>
+              <option value="administrador">Administrador</option>
+            </select>
+        </div>
+        <div class="field">
+            
+            <input formControlName="fechaNacimiento" type="date">
+            @if (formRegistro.controls['fechaNacimiento'].invalid && 
+            formRegistro.controls['fechaNacimiento'].touched) {
+                @if(formRegistro.controls['fechaNacimiento'].errors?.['required']) {
+                    <small> La fecha de nacimiento es requerida. </small>
+                }
+            }
+        </div>
+        <div class="field">
+            <input type="text" name="descripcion" id="descripcion" formControlName="descripcion" placeholder="Descripción breve">
+            
+        </div>
+        <div class="field">
+            <input type="file" (change)="onArchivoSeleccionado($event)">
+        </div>
+  <button type="submit">Registrar Usuario</button>
+
+  @if (mensaje) {
+        <div class="mensaje-ok">{{ mensaje }}</div>
+    }
+    @if (error) {
+
+        <div class="mensaje-error">{{ error }}</div>
+    }
+</form>
+ </div>
+
+
+
+ <div class="user-container">
+
+<!-- Lista de usuarios -->
+ <h3> Lista de usuarios </h3>
+<table>
+  <thead>
+    <tr>
+        <th>Username</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th> Fecha nacimiento </th>
+      <th>Tipo</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(u of usuarios ; track $index) {
+        <tr>
+            <td> {{ u.username}} </td>
+            <td>{{ u.nombre }}</td>
+            <td> {{ u.apellido }}</td>
+            <td>{{ u.email }}</td>
+            <td> {{ u.fechaNacimiento |date: 'shortDate'  }}</td>
+            <td>{{ u.tipoPerfil }}</td>
+            <td>{{ u.isActive ? 'Activo' : 'Deshabilitado' }}</td>
+            <td>
+                <button class="deshabilitar" *ngIf="u.isActive" (click)="darDeBaja(u._id)">Deshabilitar</button>
+                <button class="habilitar" *ngIf="!u.isActive" (click)="rehabilitar(u._id)">Rehabilitar</button>
+            </td>
+        </tr>
+    }
+    
+  </tbody>
+</table>
+
+</div>

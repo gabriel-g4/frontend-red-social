@@ -1,0 +1,53 @@
+.mensaje-ok {
+  color: green;
+  margin: 10px 0;
+}
+
+.mensaje-error {
+  color: red;
+  margin: 10px 0;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #B4D2D7;
+}
+
+input, select, textarea, button {
+  margin: 15px 0;
+  display: block;
+  width: 100%;
+}
+
+.deshabilitar {
+    background-color: brown;
+}
+
+.habilitar {
+    background-color: green;
+}
+
+div.user-container {
+    width: 80dvw;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+    .container {
+        background: #E1EBF0;
+    }
+}
+
+
+h1 {
+  margin: 2rem;
+  text-align: center;
+}

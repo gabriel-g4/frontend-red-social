@@ -16,6 +16,13 @@ export class CargandoComponent implements OnInit {
   
 
   ngOnInit(): void {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      // No hay token: redirigir directo a login
+      this.router.navigate(['/login']);
+      return;
+    }
     this.authService.autorizar().subscribe({
       next: () => {
         setTimeout(() => {
