@@ -36,6 +36,11 @@ export const routes: Routes = [
         loadComponent: ()=> import('./components/dashboard-usuarios/dashboard-usuarios.component').then(c => c.DashboardUsuariosComponent) 
     },
     { 
+        path: 'dashboard/estadisticas', 
+        canActivate: [adminGuard],
+        loadComponent: ()=> import('./components/dashboard-estadisticas/dashboard-estadisticas.component').then(c => c.DashboardEstadisticasComponent) 
+    },
+    { 
         path: "**", 
         redirectTo: "/publicaciones", 
         pathMatch: "full"

@@ -1,0 +1,88 @@
+<section class="container">
+    <h2> Publicaciones realizadas por usuario en un lapso de
+tiempo </h2>
+    <div class="estadisticas-container">
+  <form [formGroup]="postsFiltroForm" (ngSubmit)="obtenerEstadisticasPosts()">
+    <div class="field">
+        <label>Desde:</label>
+    <input type="date" formControlName="startDate" required>
+    </div>
+
+    <div class="field">
+        <label>Hasta:</label>
+        <input type="date" formControlName="endDate" required>
+    </div>
+
+    <button type="submit">Ver estadísticas</button>
+  </form>
+
+  <div *ngIf="postsChartData">
+    <canvas baseChart
+      [data]="postsChartData"
+      [options]="postsChartOptions"
+      [type]="'bar'">
+    </canvas>
+  </div>
+</div>
+</section>
+
+<section class="container">
+<div class="estadisticas-container">
+
+  <h2> Comentarios realizados por usuario en un lapso de
+tiempo </h2>
+  <form [formGroup]="commsFiltroForm" (ngSubmit)="obtenerEstadisticasComentarios()">
+    <div class="field">
+        <label>Desde:</label>
+    <input type="date" formControlName="startDate" required>
+    </div>
+
+    <div class="field">
+        <label>Hasta:</label>
+        <input type="date" formControlName="endDate" required>
+    </div>
+
+    <button type="submit">Ver estadísticas</button>
+  </form>
+
+  <div *ngIf="commentsChartData">
+    <canvas baseChart
+      [data]="commentsChartData"
+      [options]="commentsChartOptions"
+      [type]="'bar'">
+    </canvas>
+  </div>
+
+  </div>
+</section>
+
+
+<section class="container">
+<div class="estadisticas-container">
+
+  <h2> Comentarios realizadas por post en un lapso de
+tiempo </h2>
+  <form [formGroup]="commentsPorPostFiltroForm" (ngSubmit)="obtenerEstadisticasComentariosPorPost()">
+    <div class="field">
+        <label>Desde:</label>
+    <input type="date" formControlName="startDate" required>
+    </div>
+
+    <div class="field">
+        <label>Hasta:</label>
+        <input type="date" formControlName="endDate" required>
+    </div>
+
+    <button type="submit">Ver estadísticas</button>
+  </form>
+
+  <div *ngIf="commentsPorPostChartData">
+    <canvas baseChart
+      [data]="commentsPorPostChartData"
+      [options]="commentsPorPostChartOptions"
+      [type]="'bar'">
+    </canvas>
+  </div>
+
+  </div>
+</section>
