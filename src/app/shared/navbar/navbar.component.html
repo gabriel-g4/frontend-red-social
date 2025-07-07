@@ -6,11 +6,21 @@
         <li>
             <a routerLink="/registro" routerLinkActive="active">registro</a>
         </li>
-        <li>
-            <a routerLink="/publicaciones" routerLinkActive="active">publicaciones</a>
-        </li>
-        <li>
-            <a routerLink="/mi-perfil" routerLinkActive="active">mi-perfil</a>
-        </li>
+        @if (loggedIn) {
+            <li>
+                <a routerLink="/publicaciones" routerLinkActive="active">publicaciones</a>
+            </li>
+            <li>
+                <a routerLink="/mi-perfil" routerLinkActive="active">mi-perfil</a>
+            </li>
+        }
+        @if (isAdmin) {
+            <li>
+                <a routerLink="/dashboard/usuarios" routerLinkActive="active">usuarios</a>
+            </li>
+            <li>
+                <a routerLink="/dashboard/estadisticas" routerLinkActive="active">estadisticas</a>
+            </li>
+        }
     </ul>
 </nav>

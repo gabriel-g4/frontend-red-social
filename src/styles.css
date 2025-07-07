@@ -309,3 +309,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-color: #07485E;
   outline: none;
 }
+
+/* styles.css o styles.scss global */
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* que ocupe toda la altura de la ventana */
+}
+
+app-navbar {
+  /* normal, puede quedar fijo o como quieras */
+}
+
+div {
+  flex: 1; /* esto hace que el div que contiene el router-outlet crezca para ocupar todo el espacio disponible */
+}
+
+app-footer {
+  /* footer queda abajo siempre */
+}

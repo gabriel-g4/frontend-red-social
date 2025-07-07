@@ -42,13 +42,14 @@ export class TimerService {
         }
         // Si no acepta, el token expira en 5 minutos más
       });
-    }, 100 * 60 * 1000);
+    }, 10 * 60 * 1000);
 
     // Después de 15 minutos, cerrar sesión si no se renovó
     this.expirationTimer = setTimeout(() => {
       this.getAuthService().logout();
+      this.authService.setLoggedIn(false);
       this.router.navigate(['/login']);
-    }, 200 * 60 * 1000);
+    }, 15 * 60 * 1000);
   }
 
   clearTimers(): void {

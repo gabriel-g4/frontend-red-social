@@ -4,26 +4,35 @@ import { environment } from '../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { RegisterModel } from '../models/register.interface';
 import { User } from '../models/user.interface';
-
+import { map, of, catchError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private loggedInSubject = new BehaviorSubject<boolean>(false);
+  private usuarioActualSubject = new BehaviorSubject<User | null>(this.getUsuarioActual());
+  usuarioActual$ = this.usuarioActualSubject.asObservable();
+
   constructor(private httpClient: HttpClient) {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
+      this.checkToken();
       this.usuarioActual = JSON.parse(storedUser);
     }
    }
 
-  // auth.service.ts
+ 
   private usuarioActual!: User;
+
+  
 
   setUsuarioActual(user: User) {
     this.usuarioActual = user;
     localStorage.setItem('user', JSON.stringify(user));
+    this.usuarioActualSubject.next(user);
   }
 
   getUsuarioActual(): User | null {
@@ -84,6 +93,36 @@ export class AuthService {
   logout() {
     localStorage.clear()
   }
+
+  
+
+  isLoggedIn(): Observable<boolean> {
+  return this.loggedInSubject.asObservable();
+}
+
+private checkToken() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.loggedInSubject.next(false);
+      return;
+    }
+    this.autorizar().pipe(
+      map(() => true),
+      catchError(() => {
+        this.logout();
+        return of(false);
+      })
+    ).subscribe(status => this.loggedInSubject.next(status));
+  }
+
+  setLoggedIn(value: boolean) {
+    this.loggedInSubject.next(value);
+  }
+
+  isAdmin(): boolean {
+  const user = this.getUsuarioActual();
+  return user?.tipoPerfil?.includes('administrador') || false;
+}
 
   
 }

@@ -80,6 +80,7 @@ export class RegistroComponent implements OnInit{
                 // Guardar token JWT en localStorage
                 localStorage.setItem('token', res.accessToken);
                 console.log('Registro correcto. Token guardado.');
+                this.authService.setLoggedIn(true);
                 this.authService.setUsuarioActual(res.data.user);
                 this.sessionTimerService.startTimers();
                 // Redireccionar al componente protegido

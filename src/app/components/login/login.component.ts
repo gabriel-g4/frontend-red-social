@@ -40,6 +40,7 @@ export class LoginComponent {
                 // Guardar token JWT en localStorage
                 localStorage.setItem('token', res.accessToken);
                 console.log('Login correcto. Token guardado.');
+                this.authService.setLoggedIn(true);
                 this.authService.setUsuarioActual(res.user);
                 this.sessionTimerService.startTimers();
 
