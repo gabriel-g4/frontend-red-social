@@ -75,8 +75,9 @@ export class AuthService {
     formData.append('tipoPerfil', registerModel.tipoPerfil); // como "usuario" o "administrador"
 
     // Imagen (File)
+    console.log(registerModel.imagenPerfil)
     if (registerModel.imagenPerfil instanceof File) {
-      formData.append('imagenPerfil', registerModel.imagenPerfil);
+      formData.append('imagen', registerModel.imagenPerfil, registerModel.imagenPerfil.name);
     }
 
     return this.httpClient.post(`${this.baseUrl}/auth/register`, formData);

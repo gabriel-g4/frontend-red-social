@@ -323,14 +323,8 @@ app-root {
   min-height: 100vh; /* que ocupe toda la altura de la ventana */
 }
 
-app-navbar {
-  /* normal, puede quedar fijo o como quieras */
-}
 
 div {
   flex: 1; /* esto hace que el div que contiene el router-outlet crezca para ocupar todo el espacio disponible */
 }
 
-app-footer {
-  /* footer queda abajo siempre */
-}

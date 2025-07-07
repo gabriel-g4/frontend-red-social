@@ -114,7 +114,8 @@
 
         <div class="field">
             <label for="profile-picture">Foto de perfil</label>
-            <input type="file" name="profile-picture" id="profile-picture" formControlName="profilePicture" placeholder="Foto de perfil" accept="image/*">
+            <input type="file" name="profile-picture" id="profile-picture" accept="image/*" (change)="onFileSelected($event)">
+
 
             @if (registroForm.controls.profilePicture.invalid && 
                 registroForm.controls.profilePicture.touched) {

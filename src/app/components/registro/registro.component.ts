@@ -44,6 +44,15 @@ export class RegistroComponent implements OnInit{
     this.registroForm.controls.repeatPassword.addValidators(ValidatorRepeatedPassword(this.registroForm.controls.password))
     this.registroForm.controls.repeatPassword.updateValueAndValidity();
   }
+
+  onFileSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+    this.registroForm.controls['profilePicture'].setValue(file);
+  }
+}
+
   
   async onSubmit(){
 
@@ -62,8 +71,8 @@ export class RegistroComponent implements OnInit{
           password: this.registroForm.value.password || "",
           fechaNacimiento: (this.registroForm.value.date || ""),
           tipoPerfil: TipoUsuario.USER,
-          imagenPerfil: this.registroForm.value.profilePicture || undefined,
-          descripcion: this.registroForm.value.description || ""
+          descripcion: this.registroForm.value.description || "",
+          imagenPerfil: this.registroForm.value.profilePicture || undefined
         } 
 
         console.log(registerObject)
